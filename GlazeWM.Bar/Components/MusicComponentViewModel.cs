@@ -1,4 +1,5 @@
 using System;
+using System.Security;
 using System.Collections.Generic;
 using GlazeWM.Domain.UserConfigs;
 using Windows.Media.Control;
@@ -91,8 +92,8 @@ namespace GlazeWM.Bar.Components
 
       foreach (var session in songSessionDict)
       {
-        var title = Truncate(session.Value.SongTitle, _config.MaxTitleLength);
-        var artist = Truncate(session.Value.ArtistName, _config.MaxArtistLength);
+        var title = SecurityElement.Escape(Truncate(session.Value.SongTitle, _config.MaxTitleLength));
+        var artist = SecurityElement.Escape(Truncate(session.Value.ArtistName, _config.MaxArtistLength));
         if (GetLabel(session.Value.MusicStatus) == _config.LabelPaused && label != _config.LabelPlaying)
         {
           label = _config.LabelPaused;
